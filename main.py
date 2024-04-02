@@ -1,42 +1,33 @@
 import os
+
+def read_todos():
+    with open("todo.txt", "r") as file:
+        todos = file.readlines()
+    return todos
+
+def write_todos(todos):
+    with open("todo.txt", "w") as file:
+        file.writelines(todos)
+
 while True:
-    user_action=input('enter one option "add","show","exit","completed or use 1,2,3,4::')
+    user_action = input('Enter one option "add", "show", "exit", "completed" or use 1, 2, 3, 4: ')
     match user_action:
-        case "add"|"1":
-            todos=input("enter a todo list:")+"\n"
-            todo=[]
-            todo.append(todos)
-            file1=open("todo.txt","a")
-            file1.writelines(todo)
-            file1.close()
-        case "show"|"2":
-            file1=open("todo.txt","r")
-            c=file1.readlines()
-            # c=[i.strip("\n") for i in c ]
-            for index,i in enumerate(c,start=1):
-              i=i.strip("\n")
-              print(f"{index}.{i}")
-            file1.close()
-        case "exit"|"3" :
-               print("exited from the todo list")
-               break
-        case "completed"|"4":
-            file1=open("todo.txt","r")
-            lines=file1.readlines()
-            file1.close()
-            completed1=input("enter the completed task:")
-
-            for line in lines:
-                if line.strip()!=completed1:
-                     file2=open("todo2.txt","w")
-                     file2.write(line)
-
-            os.replace("todo2.txt","todo.txt")
-            file2.close()
-        case default:
-            print("enter options between 1 to 3")
-
-
-
-
-
+        case "add" | "1":
+            todo = input("Enter a todo: ") + "\n"
+            todos = read_todos()
+            todos.append(todo)
+            write_todos(todos)
+        case "show" | "2":
+            todos = read_todos()
+            for index, todo in enumerate(todos, start=1):
+                print(f"{index}. {todo.strip()}")
+        case "exit" | "3":
+            print("Exited from the todo list")
+            break
+        case "completed" | "4":
+            todos = read_todos()
+            completed_task = input("Enter the completed task: ")
+            updated_todos = [todo for todo in todos if todo.strip() != completed_task]
+            write_todos(updated_todos)
+        case _:
+            print("Enter options between 1 to 4")
