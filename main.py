@@ -20,11 +20,14 @@ while True:
         case "completed" | "3":
             todos = read_todos()
             completed_task = input("Enter the completed task: ")
-            updated_todos = [todo for todo in todos if todo.strip() != completed_task]
+            updated_todos = [todo for todo in todos if todo.strip() != completed_task] # list comprehension
             """"  updated_todos = []
                     for todo in todos:
                         if todo.strip() != completed_task:
                             updated_todos.append(todo)"""
+            """ num=input("enter a index of todo ")
+                todos.pop(num-1)
+                write_todos(todos)""" # another way of doing
             write_todos(updated_todos)
 
         case "edit"|"4" :
