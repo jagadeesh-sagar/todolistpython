@@ -18,9 +18,12 @@ while True:
         for index, todo in enumerate(todos, start=1):
             print(f"{index}. {todo.strip()}")
    elif user_action.startswith("completed"):
+        completed_task = user_action[10:].strip()
         todos = read_todos()
-        completed_task = user_action[10:]
-        updated_todos = [todo for todo in todos if todo.strip() != completed_task ] # list comprehension
+        if any(todo.strip() == completed_task for todo in todos): #if any (): returns True or False
+            updated_todos = [todo for todo in todos if todo.strip() != completed_task]
+            write_todos(updated_todos)
+
         """  updated_todos = []
                 for todo in todos:
                     if todo.strip() != completed_task:
@@ -28,7 +31,6 @@ while True:
         """ num=input("enter a index of todo ")
             todos.pop(num-1)
             write_todos(todos)""" # another way of doing
-        write_todos(updated_todos)
 
    elif user_action.startswith("edit"):
        try:
@@ -53,4 +55,5 @@ while True:
         break
    else:
         print("Enter valid options:")
+
 
