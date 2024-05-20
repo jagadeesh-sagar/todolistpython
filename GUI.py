@@ -2,17 +2,21 @@ import functions
 import FreeSimpleGUI as sg
 import time
 import os
+try:
+    if not os.path.exists('todo.txt'):
+        with open('todo.txt', "w") as file:
+            pass
+except FileNotFoundError:
+    sg.popup("Error")
+
 sg.theme("Black")
-if not os.path.exists("dist/todo.txt"):
-    with open("dist/todo.txt", "w") as file:
-        pass
 clock=sg.Text('',key="clock")
 label1=sg.Text("Type in TO DO LIST")
 input1=sg.InputText(tooltip="Enter TODO",key="Todo")
-add_Button=sg.Button(image_source="add.png",mouseover_colors="LightBlue2",tooltip="Add Todo",key ="Add")
+add_Button=sg.Button("add",mouseover_colors="LightBlue2",tooltip="Add Todo",key ="Add")
 list_box=sg.Listbox(values=functions.read_todos(),key="Todos",enable_events=True,size=[45,15])
 Edit_Button=sg.Button("Edit",size=[3,1])
-complete_button=sg.Button(image_source="complete.png",key="completed",mouseover_colors="LightBlue2",tooltip="Completed",size=[4,4])
+complete_button=sg.Button("completed",key="completed",mouseover_colors="LightBlue2",tooltip="Completed",size=[8,1])
 Exit_button=sg.Button("Exit",key="exit")
 window=sg.Window("MY TO-DO-LIST",layout=[[clock],[label1]
     ,[input1,add_Button],
@@ -31,6 +35,7 @@ while True:
             todos.append(new_todos)
             functions.write_todos(todos)
             window['Todos'].update(values=todos)
+            window['Todo'].update(value="")
         case "Edit":
             try:
                     todo_to_edit=values['Todos'][0]
@@ -40,6 +45,7 @@ while True:
                     todo[index]=new_todo
                     functions.write_todos(todo)
                     window['Todos'].update(values=todo) #update is used for updating the listboxes in real time
+                    window['Todo'].update(value="")
             except IndexError:
                     sg.popup("select any item",font=("Arial",15))
         case "completed":
