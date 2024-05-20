@@ -1,20 +1,23 @@
 import functions
 import FreeSimpleGUI as sg
 import time
+import os
 sg.theme("Black")
-
+if not os.path.exists("dist/todo.txt"):
+    with open("dist/todo.txt", "w") as file:
+        pass
 clock=sg.Text('',key="clock")
 label1=sg.Text("Type in TO DO LIST")
 input1=sg.InputText(tooltip="Enter TODO",key="Todo")
-add_Button=sg.Button("Add")
+add_Button=sg.Button(image_source="add.png",mouseover_colors="LightBlue2",tooltip="Add Todo",key ="Add")
 list_box=sg.Listbox(values=functions.read_todos(),key="Todos",enable_events=True,size=[45,15])
-Edit_Button=sg.Button("Edit")
-complete_button=sg.Button("complete",key="completed")
+Edit_Button=sg.Button("Edit",size=[3,1])
+complete_button=sg.Button(image_source="complete.png",key="completed",mouseover_colors="LightBlue2",tooltip="Completed",size=[4,4])
 Exit_button=sg.Button("Exit",key="exit")
 window=sg.Window("MY TO-DO-LIST",layout=[[clock],[label1]
     ,[input1,add_Button],
     [list_box,Edit_Button,complete_button],
-     [Exit_button]],font=('Arial',18))
+     [Exit_button]],font=('Arial',13))
 
 while True:
     event,values=window.read(timeout=1000)

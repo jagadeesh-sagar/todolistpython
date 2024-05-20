@@ -1,4 +1,4 @@
-FILEPATH="todo.txt"
+FILEPATH= "dist/todo.txt"
 def read_todos(filepath=FILEPATH):
     with open(filepath, "r") as files:
         todos = files.readlines()
